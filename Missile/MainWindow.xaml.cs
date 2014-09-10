@@ -28,6 +28,7 @@ namespace Missile
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            Aircraft a = new Aircraft();
             ModelVisual3D mv3d = new ModelVisual3D();
             GeometryModel3D model;
             Pic3d.Children.RemoveAt(1);
