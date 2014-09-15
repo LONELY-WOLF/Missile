@@ -20,7 +20,7 @@ namespace Missile
         {
             char[] separator = new char[] {'\t', ' '};
             MeshGeometry3D mesh = new MeshGeometry3D();
-            DiffuseMaterial materia = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, 128, 0)));
+            DiffuseMaterial materia = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, 255, 0)));
             foreach (string str in File.ReadAllLines(stlPath))
             {
                 string[] nums = str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
@@ -55,7 +55,7 @@ namespace Missile
                 if (damage != value)
                 {
                     damage = value;
-                    model.Material = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, (byte)((1.0 - damage) * 128.0), (byte)(damage * 128.0))));
+                    model.Material = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, (byte)((1.0 - damage) * 255.0), (byte)(damage * 255.0))));
                     NotifyPropertyChanged();
                     NotifyPropertyChanged("Model");
                 }

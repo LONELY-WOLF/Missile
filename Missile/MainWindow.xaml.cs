@@ -29,32 +29,13 @@ namespace Missile
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string fileName;
             OpenFileDialog dlg = new OpenFileDialog();
             if (dlg.ShowDialog() == true)
             {
                 Aircraft a = new Aircraft(dlg.FileName);
                 ModelVisual3D mv3d = new ModelVisual3D();
-                GeometryModel3D model;
                 Pic3d.Children.RemoveAt(1);
-                MeshGeometry3D geom = new MeshGeometry3D();
-                //Positions="0 0 0  1 0 0  0 1 0  1 1 0  0 0 1  1 0 1  0 1 1  1 1 1"
-                //TriangleIndices="2 3 1  2 1 0  7 1 3  7 5 1  6 5 7  6 4 5  6 2 0  2 0 4  2 7 3  2 6 7  0 1 5  0 5 4"
-                geom.Positions.Add(new Point3D(0.0, 0.0, 0.0));
-                geom.Positions.Add(new Point3D(1.0, 0.0, 0.0));
-                geom.Positions.Add(new Point3D(0.0, 1.0, 0.0));
-                geom.Positions.Add(new Point3D(1.0, 1.0, 0.0));
-                geom.Positions.Add(new Point3D(0.0, 0.0, 1.0));
-                geom.Positions.Add(new Point3D(1.0, 0.0, 1.0));
-                geom.Positions.Add(new Point3D(0.0, 1.0, 1.0));
-                geom.Positions.Add(new Point3D(1.0, 1.0, 1.0));
-                foreach (string item in "2 3 1  2 1 0  7 1 3  7 5 1  6 5 7  6 4 5  6 2 0  2 0 4  2 7 3  2 6 7  0 1 5  0 5 4".Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    geom.TriangleIndices.Add(int.Parse(item));
-                }
-                DiffuseMaterial materia = new DiffuseMaterial(new SolidColorBrush(Color.FromRgb(128, 128, 128)));
-                model = new GeometryModel3D(geom, materia);
-                mv3d.Content = model;
+                mv3d.Content = a.Model;
                 Pic3d.Children.Add(mv3d);
             }
         }

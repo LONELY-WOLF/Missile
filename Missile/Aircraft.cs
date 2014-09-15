@@ -26,6 +26,26 @@ namespace Missile
             {
                 parts.Add(new Part(Path.Combine(fi.DirectoryName, part.Attribute(XName.Get("ModelFileName")).Value)));
             }
+            foreach(Part part in parts)
+            {
+                model.Children.Add(part.Model);
+            }
+        }
+
+        public Model3DGroup Model
+        {
+            set
+            {
+                if (model != value)
+                {
+                    model = value;
+                    NotifyPropertyChanged();
+                }
+            }
+            get
+            {
+                return model;
+            }
         }
 
         #region INotifyPropertyChanged

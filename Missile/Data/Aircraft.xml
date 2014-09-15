@@ -2,4 +2,11 @@
 <Aircraft Name="Самолёт">
   <Part Name="Фюзеляж" ModelFileName="Фюзеляж.stl"/>
   <Part Name="Левая консоль крыла" ModelFileName="Крыло (л).stl"/>
+  <Part Name="Правая консоль крыла" ModelFileName="Крыло (п).stl"/>
+  <Part Name="Левый стабилизатор" ModelFileName="Стабилизатор (л).stl"/>
+  <Part Name="Правый стабилизатор" ModelFileName="Стабилизатор (п).stl"/>
+  <Part Name="Левый киль" ModelFileName="Киль (л).stl"/>
+  <Part Name="Правый киль" ModelFileName="Киль (п).stl"/>
+  <Part Name="Левый двигатель" ModelFileName="Двигатель (л).stl"/>
+  <Part Name="Правый двигатель" ModelFileName="Двигатель (п).stl"/>
 </Aircraft>
