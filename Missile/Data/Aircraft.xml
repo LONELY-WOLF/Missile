@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?> 
+<Aircraft Name="Самолёт">
+  <Part Name="Фюзеляж" ModelFileName="Фюзеляж.stl"/>
+  <Part Name="Левая консоль крыла" ModelFileName="Крыло (л).stl"/>
+</Aircraft>
