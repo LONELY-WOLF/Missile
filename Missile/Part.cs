@@ -55,7 +55,7 @@ namespace Missile
                 if (damage != value)
                 {
                     damage = value;
-                    model.Material = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, (byte)((1.0 - damage) * 255.0), (byte)(damage * 255.0))));
+                    model.Material = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, (byte)(damage * 255.0), (byte)((1.0 - damage) * 255.0), 0)));
                     NotifyPropertyChanged();
                     NotifyPropertyChanged("Model");
                 }
