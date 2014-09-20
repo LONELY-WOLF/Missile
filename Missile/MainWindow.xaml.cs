@@ -22,6 +22,7 @@ namespace Missile
     /// </summary>
     public partial class MainWindow : Window
     {
+        Aircraft aircraft;
         bool LMBDown = false;
         Point basePos;
         Transform3D savedState;
@@ -36,9 +37,9 @@ namespace Missile
             OpenFileDialog dlg = new OpenFileDialog();
             if (dlg.ShowDialog() == true)
             {
-                Aircraft a = new Aircraft(dlg.FileName);
+                aircraft = new Aircraft(dlg.FileName);
                 ModelVisual3D mv3d = new ModelVisual3D();
-                mv3d.Content = a.Model;
+                mv3d.Content = aircraft.Model;
                 Pic3d.Children.Add(mv3d);
             }
         }
@@ -75,6 +76,11 @@ namespace Missile
                 ((PerspectiveCamera)Pic3d.Camera).Transform = gr;
                 DirLight.Transform = gr;
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            aircraft.parts[0].Damage = 1.0;
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Missile
     class Aircraft : INotifyPropertyChanged
     {
         Model3DGroup model;
-        ObservableCollection<Part> parts = new ObservableCollection<Part>();
+        public ObservableCollection<Part> parts = new ObservableCollection<Part>();
 
         public Aircraft(string xmlFileName)
         {
