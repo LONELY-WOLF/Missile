@@ -22,6 +22,8 @@ namespace Missile
     /// </summary>
     public partial class MainWindow : Window
     {
+        ComputeParams computeParams;
+
         Aircraft aircraft;
         bool LMBDown = false;
         Point basePos;
@@ -30,6 +32,9 @@ namespace Missile
         public MainWindow()
         {
             InitializeComponent();
+            computeParams = new ComputeParams();
+            computeParams.Vt = 10.43453;
+            MainGrid.DataContext = computeParams;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -81,6 +86,11 @@ namespace Missile
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             aircraft.parts[0].Damage = 1.0;
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
