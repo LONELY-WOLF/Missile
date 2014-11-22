@@ -60,7 +60,7 @@
         <TextBlock Grid.Row="15">Задержка взрыва</TextBlock>
         <TextBox Grid.Row="15" Grid.Column="1" Name="txtt" Text="{Binding Path=tau, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
         <TextBlock Grid.Row="16">СК отклонение точки взрыва</TextBlock>
-        <TextBox Grid.Row="16" Grid.Column="1" Name="txtsigmaX" Text="{Binding Path=sigmaX2, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
+        <TextBox Grid.Row="16" Grid.Column="1" Name="txtsigmaX" Text="{Binding Path=sigmaX, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
         <TextBlock Grid.Row="18">Количество итераций</TextBlock>
         <TextBox Grid.Row="18" Grid.Column="1" Name="txtN">100</TextBox>
         <ProgressBar Name="progress" Grid.Row="19"/>

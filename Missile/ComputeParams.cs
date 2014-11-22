@@ -63,11 +63,11 @@ namespace Missile
         /// <summary>
         /// Среднее квадратическое отклонение рассеивания точки взрыва вдоль относительной траектории (м)
         /// </summary>
-        public double sigmaX2 { get; set; }
+        public double sigmaX { get; set; }
         /// <summary>
-        /// Систематическая ошибка по X (м)
+        /// Систематическая ошибка по Z (м)
         /// </summary>
-        public double x { get; set; }
+        public double z { get; set; }
         /// <summary>
         /// Систематическая ошибка по Y (м)
         /// </summary>
@@ -75,7 +75,7 @@ namespace Missile
         /// <summary>
         /// Среднее квадратическое отклонение
         /// </summary>
-        public double sigmaX { get; set; }
+        public double sigmaZ { get; set; }
         /// <summary>
         /// Среднее квадратическое отклонение
         /// </summary>

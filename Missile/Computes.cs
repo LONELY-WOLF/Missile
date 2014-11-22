@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Missile
 {
-    static class Computes
+    class Computes
     {
         Aircraft aircraft;
         ComputeParams computeParams;

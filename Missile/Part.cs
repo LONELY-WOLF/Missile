@@ -16,6 +16,33 @@ namespace Missile
         GeometryModel3D model;
         double damage = 0.0;
 
+        #region Compute params
+        public int ID = -1;
+        public int GroupID = -1;
+        public bool Requried = false;
+        /// <summary>
+        /// Значение удельного импульса ударной волны,
+        /// при котором возникает разрушение отсека, кгс*с/м^2
+        /// </summary>
+        public double J;
+        /// <summary>
+        /// Толщина оболочки отсека, мм
+        /// </summary>
+        public double Delta;
+        /// <summary>
+        /// Предел текучести материала оболочки отсека
+        /// </summary>
+        public double SigmaS;
+        /// <summary>
+        /// Расстояние между силовыми элементами подкрепляющего набора отсека, м
+        /// </summary>
+        public double A;
+        /// <summary>
+        /// Критическое значение глубины внедрения стержневого кольца в конструкцию, мм
+        /// </summary>
+        public double L;
+        #endregion
+
         public Part(string stlPath)
         {
             char[] separator = new char[] {'\t', ' '};

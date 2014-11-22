@@ -5,8 +5,28 @@
       <xs:sequence>
         <xs:element maxOccurs="unbounded" name="Part">
           <xs:complexType>
+            <xs:attribute name="ID" type="xs:unsignedByte" use="required" />
             <xs:attribute name="Name" type="xs:string" use="required" />
             <xs:attribute name="ModelFileName" type="xs:string" use="required" />
+            <xs:attribute name="J" type="xs:double" use="required" />
+            <xs:attribute name="Delta" type="xs:double" use="required" />
+            <xs:attribute name="SigmaS" type="xs:double" use="required" />
+            <xs:attribute name="A" type="xs:double" use="required" />
+            <xs:attribute name="L" type="xs:double" use="required" />
+            <xs:attribute name="GroupID" type="xs:unsignedByte" use="optional" />
+            <xs:attribute name="Required" type="xs:boolean" use="optional"/>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="Contour">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" name="Point">
+                <xs:complexType>
+                  <xs:attribute name="X" type="xs:double" use="required" />
+                  <xs:attribute name="Z" type="xs:double" use="required" />
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
