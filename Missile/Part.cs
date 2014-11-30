@@ -16,7 +16,8 @@ namespace Missile
         GeometryModel3D model;
         double damage = 0.0;
 
-        List<STLData> MeshContent = new List<STLData>();
+        public List<STLData> MeshContent = new List<STLData>();
+        public List<STLData> MeshContentB = new List<STLData>();
 
         #region Compute params
         public int ID = -1;
@@ -47,7 +48,6 @@ namespace Missile
 
         public Part(string stlPath)
         {
-            STLData stldata = new STLData();
             char[] separator = new char[] {'\t', ' '};
             MeshGeometry3D mesh = new MeshGeometry3D();
             DiffuseMaterial materia = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, 255, 0)));
@@ -57,6 +57,8 @@ namespace Missile
                 string[] nums = lines[i].Split(separator, StringSplitOptions.RemoveEmptyEntries);
                 if (nums[0] == "facet")
                 {
+
+                    STLData stldata = new STLData();
                     stldata.Normal = new Point3D(Double.Parse(nums[2], CultureInfo.InvariantCulture), Double.Parse(nums[3], CultureInfo.InvariantCulture), Double.Parse(nums[4], CultureInfo.InvariantCulture));
                     i += 2;
                     for (int j = 0; j < 3; j++)
@@ -138,7 +140,7 @@ namespace Missile
         #endregion
     }
 
-    public struct STLData
+    public class STLData
     {
         public Point3D[] Vertexes = new Point3D[3];
         public Point3D Normal;
