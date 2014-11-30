@@ -15,6 +15,8 @@ namespace Missile
         {
             this.aircraft = aircraft;
             this.computeParams = computeParams;
+
+
         }
 
         public bool Iterate()

@@ -16,6 +16,8 @@ namespace Missile
     {
         Model3DGroup model;
         public ObservableCollection<Part> parts = new ObservableCollection<Part>();
+        public Point3D[] contour;
+        public Point3D[] contour0;
 
         public Aircraft(string xmlFileName)
         {

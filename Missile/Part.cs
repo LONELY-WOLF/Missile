@@ -16,6 +16,8 @@ namespace Missile
         GeometryModel3D model;
         double damage = 0.0;
 
+        List<STLData> MeshContent = new List<STLData>();
+
         #region Compute params
         public int ID = -1;
         public int GroupID = -1;
@@ -45,16 +47,31 @@ namespace Missile
 
         public Part(string stlPath)
         {
+            STLData stldata = new STLData();
             char[] separator = new char[] {'\t', ' '};
             MeshGeometry3D mesh = new MeshGeometry3D();
             DiffuseMaterial materia = new DiffuseMaterial(new SolidColorBrush(Color.FromArgb(255, 0, 255, 0)));
-            foreach (string str in File.ReadAllLines(stlPath))
+            string[] lines = File.ReadAllLines(stlPath);
+            for (int i = 0; i < lines.Count(); i++ )
             {
-                string[] nums = str.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-                if(nums[0] == "vertex")
+                string[] nums = lines[i].Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                if (nums[0] == "facet")
                 {
-                    mesh.Positions.Add(new Point3D(Double.Parse(nums[1], CultureInfo.InvariantCulture), Double.Parse(nums[2], CultureInfo.InvariantCulture), Double.Parse(nums[3], CultureInfo.InvariantCulture)));
+                    stldata.Normal = new Point3D(Double.Parse(nums[2], CultureInfo.InvariantCulture), Double.Parse(nums[3], CultureInfo.InvariantCulture), Double.Parse(nums[4], CultureInfo.InvariantCulture));
+                    i += 2;
+                    for (int j = 0; j < 3; j++)
+                    {
+                        nums = lines[i].Split(separator, StringSplitOptions.RemoveEmptyEntries);
+                        if (nums[0] == "vertex")
+                        {
+                            stldata.Vertexes[j] = new Point3D(Double.Parse(nums[1], CultureInfo.InvariantCulture), Double.Parse(nums[2], CultureInfo.InvariantCulture), Double.Parse(nums[3], CultureInfo.InvariantCulture));
+                            mesh.Positions.Add(stldata.Vertexes[j]);
+                        }
+                        i++;
+                    }
+                    MeshContent.Add(stldata);
                 }
+                i += 2;
             }
             model = new GeometryModel3D(mesh, materia);
         }
@@ -119,5 +136,11 @@ namespace Missile
             }
         }
         #endregion
+    }
+
+    public struct STLData
+    {
+        public Point3D[] Vertexes = new Point3D[3];
+        public Point3D Normal;
     }
 }
