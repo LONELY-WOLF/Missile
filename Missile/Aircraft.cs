@@ -16,8 +16,8 @@ namespace Missile
     {
         Model3DGroup model;
         public ObservableCollection<Part> parts = new ObservableCollection<Part>();
-        public Point3D[] contour;
-        public Point3D[] contour0;
+        public Edge[] contour;
+        public Edge[] contour0;
 
         public Aircraft(string xmlFileName)
         {
@@ -117,5 +117,10 @@ namespace Missile
             }
         }
         #endregion
+    }
+
+    public class Edge
+    {
+        public Point3D p1, p2;
     }
 }
