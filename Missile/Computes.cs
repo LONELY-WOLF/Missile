@@ -108,8 +108,46 @@ namespace Missile
 
             double x;
             {
-                double[] xpi = new double[ac.contour.Count()];
+                double[] xpi = new double[ac.contour0.Count()];
+                double[] D = new double[2];
+                double[] xr = new double[2];
+                double xr0, yr0, zr0;
+                for (int i = 0; i < xpi.Count(); i++)
+                {
+                    yr0 = ac.contour0[i].p1.Y - y;
+                    zr0 = ac.contour0[i].p1.Z - z;
+                    D[0] = (yr0 * yr0) * (Math.Pow(Math.Sin(par.gamma), 2.0) - Math.Pow(Math.Sin(epsilon), 2.0)) + (zr0 * zr0) * Math.Pow(Math.Sin(par.gamma), 2.0);
+                    xr0 = ((-zr0 * Math.Sin(epsilon) * Math.Cos(epsilon)) + (Math.Cos(par.gamma) * Math.Sqrt(D[0])));
+                    xr[0] = ac.contour0[i].p1.X - xr0;
+                    D[0] = Math.Sqrt((xr0 * xr0) + (yr0 * yr0) + (zr0 * zr0));
 
+                    yr0 = ac.contour0[i].p2.Y - y;
+                    zr0 = ac.contour0[i].p2.Z - z;
+                    D[1] = (yr0 * yr0) * (Math.Pow(Math.Sin(par.gamma), 2.0) - Math.Pow(Math.Sin(epsilon), 2.0)) + (zr0 * zr0) * Math.Pow(Math.Sin(par.gamma), 2.0);
+                    xr0 = ((-zr0 * Math.Sin(epsilon) * Math.Cos(epsilon)) + (Math.Cos(par.gamma) * Math.Sqrt(D[1])));
+                    xr[1] = ac.contour0[i].p2.X - xr0;
+                    D[1] = Math.Sqrt((xr0 * xr0) + (yr0 * yr0) + (zr0 * zr0));
+
+                    if((D[0]<=par.D) && (D[1]<=par.D))
+                    {
+                        xpi[i] = (xr[0] < xr[1]) ? xr[0] : xr[1];
+                    }
+                    else if ((D[0] > par.D) && (D[1] > par.D))
+                    {
+                        xpi[i] = 100000.0;
+                    }
+                    else
+                    {
+                        if (D[0] <= par.D)
+                        {
+
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
             }
 
             return false;
