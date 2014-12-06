@@ -14,11 +14,14 @@ namespace Missile
         double epsilon;
         double Vrel;
         double q;
+        bool[] partsDestroyed;
 
         public void Init(Aircraft aircraft, ComputeParams computeParams)
         {
             this.ac = aircraft;
             this.par = computeParams;
+
+            partsDestroyed = new bool[ac.parts.Count()];
 
             //
             // Part 1
@@ -128,7 +131,7 @@ namespace Missile
                     xr[1] = ac.contour0[i].p2.X - xr0;
                     D[1] = Math.Sqrt((xr0 * xr0) + (yr0 * yr0) + (zr0 * zr0));
 
-                    if((D[0]<=par.D) && (D[1]<=par.D))
+                    if ((D[0] <= par.D) && (D[1] <= par.D))
                     {
                         xpi[i] = (xr[0] < xr[1]) ? xr[0] : xr[1];
                     }
@@ -138,16 +141,63 @@ namespace Missile
                     }
                     else
                     {
+                        double xp = xr[0] + ((xr[1] - xr[0]) / (D[1] - D[0])) * (par.D - D[0]);
                         if (D[0] <= par.D)
                         {
-
+                            xpi[i] = (xp < xr[0]) ? xp : xr[0];
                         }
                         else
                         {
-
+                            xpi[i] = (xp < xr[1]) ? xp : xr[1];
                         }
                     }
                 }
+
+                //
+                // Part 5
+                //
+
+                double gamma, ret;
+
+                RandVal(0.0, 1.0, out gamma, 0.0, 1.0, out ret);
+
+                x = xpi.Min() + gamma * par.sigmaX + par.tau * Vrel;
+            }
+
+            //
+            // Part 6
+            //
+
+            {
+                double Rf;
+                for (int i = 0; i < ac.parts.Count(); i++)
+                {
+                    Part part = ac.parts[i];
+                    if (par.q >= 10.0)
+                    {
+                        //REM: A = 20 - 25
+                        Rf = 22.5 * (Math.Pow(par.q, 2.0 / 3.0) / part.J);
+                    }
+                    else
+                    {
+                        //REM: Wpc0 = 0.1 for a0 = 0.6 - 0.8
+                        double Wpc = 0.1 * (Math.Pow(part.A, 2.0) / (0.7 * 0.7));
+                        Rf = (1000.0 * par.q) / (part.Delta * part.SigmaS * Wpc);
+                    }
+
+                    //REM!! LINQ madness!!
+                    double DN = part.MeshContentB.Min(f => 0.25 * Math.Sqrt(Math.Pow(f.Vertexes.Sum(v => v.X) - x, 2.0) + Math.Pow(f.Vertexes.Sum(v => v.Y), 2.0) + Math.Pow(f.Vertexes.Sum(v => v.Z), 2.0)));
+                    partsDestroyed[i] = DN < Rf;
+                }
+            }
+
+            //
+            // Part 7
+            //
+
+            if(CheckAircraftDestroyed())
+            {
+                return true;
             }
 
             return false;
@@ -185,6 +235,56 @@ namespace Missile
             var A = (-p1.Y * p2.Z + p0.Y * (-p1.Z + p2.Z) + p0.Z * (p1.Y - p2.Y) + p1.Z * p2.Y);
 
             return (Math.Sign(t) == Math.Sign(A));
+        }
+
+        bool CheckAircraftDestroyed()
+        {
+            Dictionary<int, int> groupsMax = new Dictionary<int, int>();
+            Dictionary<int, int> groups = new Dictionary<int, int>();
+            foreach(Part item in ac.parts)
+            {
+                if(item.GroupID >=0)
+                {
+                    if(groupsMax.ContainsKey(item.GroupID))
+                    {
+                        groupsMax[item.GroupID]++;
+                    }
+                    else
+                    {
+                        groupsMax.Add(item.GroupID, 1);
+                        groups.Add(item.GroupID, 0);
+                    }
+                }
+            }
+
+            for (int i = 0; i < ac.parts.Count(); i++ )
+            {
+                if(partsDestroyed[i])
+                {
+                    Part part = ac.parts[i];
+                    if(part.Requried)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        if(part.GroupID >=0)
+                        {
+                            groups[part.GroupID]++;
+                            if(groups[part.GroupID] == groupsMax[part.GroupID])
+                            {
+                                return true;
+                            }
+                        }
+                        else
+                        {
+                            // Useless part?
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }
