@@ -73,7 +73,7 @@ namespace Missile
                 ac.contour0[i].p2.Z = (vertex.X * sinq) + (vertex.Y * cosq * sinalphaH) - (vertex.Z * cosq * cosalphaH);
             }
 
-            double f0 = Vrel/par.Vo;
+            double f0 = Vrel / par.Vo;
             double cose = Math.Cos(epsilon);
             double sine = Math.Sin(epsilon);
             double cosphi = Math.Cos(par.phi);
@@ -206,7 +206,7 @@ namespace Missile
             // Part 7
             //
 
-            if(CheckAircraftDestroyed())
+            if (CheckAircraftDestroyed())
             {
                 return true;
             }
@@ -223,7 +223,7 @@ namespace Missile
                 List<Point3D> points = new List<Point3D>();
                 foreach (Part part in ac.parts)
                 {
-                    for(int i =0;i< part.MeshContentB.Count; i++)
+                    for (int i = 0; i < part.MeshContentB.Count; i++)
                     {
 
                         //
@@ -234,16 +234,18 @@ namespace Missile
                         t = part.MeshContentB[i].Vertexes[1];
                         l = Math.Sqrt(Math.Pow(k.X - t.X, 2.0) + Math.Pow(k.Y - t.Y, 2.0) + Math.Pow(k.Z - t.Z, 2.0));
 
-                        A2 = A1 * Math.Pow((k.X - t.X) / l, 2.0);
-                        A2 += B1 * Math.Pow((k.Y - t.Y) / l, 2.0);
-                        A2 += C1 * Math.Pow((k.Z - t.Z) / l, 2.0);
-                        A2 += 2 * E1 * (k.X - t.X) * (k.Z - t.Z) / (l * l);
+                        A2 = A1 * Math.Pow(k.X - t.X, 2.0);
+                        A2 += B1 * Math.Pow(k.Y - t.Y, 2.0);
+                        A2 += C1 * Math.Pow(k.Z - t.Z, 2.0);
+                        A2 += 2 * E1 * (k.X - t.X) * (k.Z - t.Z);
+                        A2 /= l * l;
 
-                        B2 = 2 * A1 * t.X * (k.X - t.X) / l;
-                        B2 += 2 * B1 * t.Y * (k.Y - t.Y) / l;
-                        B2 += 2 * C1 * t.Z * (k.Z - t.Z) / l;
-                        B2 += 2 * E1 * t.X * (k.Z - t.Z) / l;
-                        B2 += 2 * E1 * t.Z * (k.X - t.X) / l;
+                        B2 = A1 * t.X * (k.X - t.X);
+                        B2 += B1 * t.Y * (k.Y - t.Y);
+                        B2 += C1 * t.Z * (k.Z - t.Z);
+                        B2 += E1 * t.X * (k.Z - t.Z);
+                        B2 += E1 * t.Z * (k.X - t.X);
+                        B2 *= 2 / l;
 
                         C2 = A1 * t.X * t.X;
                         C2 += B1 * t.Y * t.Y;
@@ -251,7 +253,7 @@ namespace Missile
                         C2 += 2 * E1 * t.X * t.Z;
 
                         double dis = (B2 * B2) - (4 * A2 * C2);
-                        if(dis <= 0.0)
+                        if (dis <= 0.0)
                         {
                             continue;
                         }
@@ -260,7 +262,7 @@ namespace Missile
                             Point3D r = new Point3D();
                             p = -B2 + Math.Sqrt(dis) / (2 * A2);
                             r = t + (k - t) * p / l;
-                            if( Math.Min(k.X, t.X) <= r.X &&
+                            if (Math.Min(k.X, t.X) <= r.X &&
                                 Math.Max(k.X, t.X) >= r.X &&
                                 Math.Min(k.Y, t.Y) <= r.Y &&
                                 Math.Max(k.Y, t.Y) >= r.Y &&
@@ -315,11 +317,11 @@ namespace Missile
         {
             Dictionary<int, int> groupsMax = new Dictionary<int, int>();
             Dictionary<int, int> groups = new Dictionary<int, int>();
-            foreach(Part item in ac.parts)
+            foreach (Part item in ac.parts)
             {
-                if(item.GroupID >=0)
+                if (item.GroupID >= 0)
                 {
-                    if(groupsMax.ContainsKey(item.GroupID))
+                    if (groupsMax.ContainsKey(item.GroupID))
                     {
                         groupsMax[item.GroupID]++;
                     }
@@ -331,21 +333,21 @@ namespace Missile
                 }
             }
 
-            for (int i = 0; i < ac.parts.Count(); i++ )
+            for (int i = 0; i < ac.parts.Count(); i++)
             {
-                if(partsDestroyed[i])
+                if (partsDestroyed[i])
                 {
                     Part part = ac.parts[i];
-                    if(part.Requried)
+                    if (part.Requried)
                     {
                         return true;
                     }
                     else
                     {
-                        if(part.GroupID >=0)
+                        if (part.GroupID >= 0)
                         {
                             groups[part.GroupID]++;
-                            if(groups[part.GroupID] == groupsMax[part.GroupID])
+                            if (groups[part.GroupID] == groupsMax[part.GroupID])
                             {
                                 return true;
                             }
