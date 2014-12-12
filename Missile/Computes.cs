@@ -15,6 +15,7 @@ namespace Missile
         double Vrel;
         double q;
         bool[] partsDestroyed;
+        double A1, B1, C1, E1;
 
         public void Init(Aircraft aircraft, ComputeParams computeParams)
         {
@@ -71,6 +72,16 @@ namespace Missile
                 ac.contour0[i].p2.Y = (vertex.Y * cosalphaH) + (vertex.Z * sinalphaH);
                 ac.contour0[i].p2.Z = (vertex.X * sinq) + (vertex.Y * cosq * sinalphaH) - (vertex.Z * cosq * cosalphaH);
             }
+
+            double f0 = Vrel/par.Vo;
+            double cose = Math.Cos(epsilon);
+            double sine = Math.Sin(epsilon);
+            double cosphi = Math.Cos(par.phi);
+            double sinphi = Math.Sin(par.phi);
+            A1 = Math.Pow(sine, 2.0) + Math.Pow(sinphi, 2.0);
+            B1 = Math.Pow(cosphi + (f0 * cose), 2.0);
+            C1 = Math.Pow(f0 + cosphi * cose, 2.0) - Math.Pow(sinphi, 2.0) * Math.Pow(sine, 2.0);
+            E1 = -sine * (f0 * cosphi + cose);
         }
 
         public bool Iterate()
@@ -198,6 +209,69 @@ namespace Missile
             if(CheckAircraftDestroyed())
             {
                 return true;
+            }
+
+            //
+            // Part 8
+            //
+
+            {
+                double V01 = Math.Sqrt(Math.Pow(par.Vo, 2.0) + Math.Pow(par.Vm, 2.0) + 2.0 * par.Vo * par.Vm * Math.Cos(par.phi));
+
+                Point3D k = new Point3D(), t = new Point3D();
+                double l, A2, B2, C2, p;
+                List<Point3D> points = new List<Point3D>();
+                foreach (Part part in ac.parts)
+                {
+                    for(int i =0;i< part.MeshContentB.Count; i++)
+                    {
+
+                        //
+                        // Part 9
+                        //
+
+                        k = part.MeshContentB[i].Vertexes[0];
+                        t = part.MeshContentB[i].Vertexes[1];
+                        l = Math.Sqrt(Math.Pow(k.X - t.X, 2.0) + Math.Pow(k.Y - t.Y, 2.0) + Math.Pow(k.Z - t.Z, 2.0));
+
+                        A2 = A1 * Math.Pow((k.X - t.X) / l, 2.0);
+                        A2 += B1 * Math.Pow((k.Y - t.Y) / l, 2.0);
+                        A2 += C1 * Math.Pow((k.Z - t.Z) / l, 2.0);
+                        A2 += 2 * E1 * (k.X - t.X) * (k.Z - t.Z) / (l * l);
+
+                        B2 = 2 * A1 * t.X * (k.X - t.X) / l;
+                        B2 += 2 * B1 * t.Y * (k.Y - t.Y) / l;
+                        B2 += 2 * C1 * t.Z * (k.Z - t.Z) / l;
+                        B2 += 2 * E1 * t.X * (k.Z - t.Z) / l;
+                        B2 += 2 * E1 * t.Z * (k.X - t.X) / l;
+
+                        C2 = A1 * t.X * t.X;
+                        C2 += B1 * t.Y * t.Y;
+                        C2 += C1 * t.Z * t.Z;
+                        C2 += 2 * E1 * t.X * t.Z;
+
+                        double dis = (B2 * B2) - (4 * A2 * C2);
+                        if(dis <= 0.0)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            Point3D r = new Point3D();
+                            p = -B2 + Math.Sqrt(dis) / (2 * A2);
+                            r = t + (k - t) * p / l;
+                            if( Math.Min(k.X, t.X) <= r.X &&
+                                Math.Max(k.X, t.X) >= r.X &&
+                                Math.Min(k.Y, t.Y) <= r.Y &&
+                                Math.Max(k.Y, t.Y) >= r.Y &&
+                                Math.Min(k.Z, t.Z) <= r.Z &&
+                                Math.Max(k.Z, t.Z) >= r.Z)
+                            {
+                                points.Add(r);
+                            }
+                        }
+                    }
+                }
             }
 
             return false;
