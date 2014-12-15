@@ -59,7 +59,7 @@ namespace Missile
                 {
 
                     STLData stldata = new STLData();
-                    stldata.Normal = new Point3D(Double.Parse(nums[2], CultureInfo.InvariantCulture), Double.Parse(nums[3], CultureInfo.InvariantCulture), Double.Parse(nums[4], CultureInfo.InvariantCulture));
+                    stldata.Normal = new Vector3D(Double.Parse(nums[2], CultureInfo.InvariantCulture), Double.Parse(nums[3], CultureInfo.InvariantCulture), Double.Parse(nums[4], CultureInfo.InvariantCulture));
                     i += 2;
                     for (int j = 0; j < 3; j++)
                     {
@@ -143,6 +143,6 @@ namespace Missile
     public class STLData
     {
         public Point3D[] Vertexes = new Point3D[3];
-        public Point3D Normal;
+        public Vector3D Normal;
     }
 }

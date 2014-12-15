@@ -51,7 +51,7 @@ namespace Missile
                         stldata.Vertexes[j].Y = (vertex.Y * cosalphaH) + (vertex.Z * sinalphaH);
                         stldata.Vertexes[j].Z = (vertex.X * sinq) + (vertex.Y * cosq * sinalphaH) - (vertex.Z * cosq * cosalphaH);
                     }
-                    vertex = curPart.MeshContent[triN].Normal;
+                    vertex = (Point3D)curPart.MeshContent[triN].Normal;
                     stldata.Normal.X = -(vertex.X * cosq) + (vertex.Y * sinalphaH) - (vertex.Z * sinq * cosalphaH);
                     stldata.Normal.Y = (vertex.Y * cosalphaH) + (vertex.Z * sinalphaH);
                     stldata.Normal.Z = (vertex.X * sinq) + (vertex.Y * cosq * sinalphaH) - (vertex.Z * cosq * cosalphaH);
@@ -297,9 +297,62 @@ namespace Missile
                         // Part 10
                         //
 
+                        if(points.Count != 2)
+                        {
+                            continue;
+                        }
+                        Vector3D ctr = ((Vector3D)points[0] + (Vector3D)points[1]) * 0.5;
+                        double Dr = ctr.Length;
+                        double cosPhiRAst = (ctr.X * Math.Cos(q) - ctr.Z * Math.Sin(q)) / Dr;
+                        double Vv = par.Vt * cosPhiRAst + Math.Sqrt(V01 * V01 - par.Vt * par.Vt * (1.0 - cosPhiRAst * cosPhiRAst));
+                        //double phiR = Math.Acos(ctr.X / Dr);
+                        //double etoR = Math.Atan(ctr.Y / ctr.Z);
+                        double Tr = Dr / Vv;
+                        double R = par.Vo * Math.Sin(par.phi) * Tr;
+                        double alpha = Vector3D.AngleBetween(ctr, part.MeshContentB[i].Normal); //beta
+                        if (alpha > 90.0)
+                        {
+                            alpha = (alpha - 90) * Math.PI / 180.0;
+                        }
+                        else
+                        {
+                            alpha = (90 - alpha) * Math.PI / 180.0;
+                        }
+                        double Lvn;
+                        if(alpha < 0.17453) // 10 degrees
+                        {
+                            Lvn = 0;
+                        }
+                        else
+                        {
+                            Lvn = 0.00673 * Math.Sin(alpha - 0.17453) / 0.98480 * Vv;
+                        }
+
+                        //
+                        // Part 11
+                        //
+
+                        if((Lvn>=part.L) && (R <= par.Rmax))
+                        {
+                            partsDestroyed[ac.parts.IndexOf(part)] = true;
+                        }
+                        
+                        //
+                        // Part 12
+                        //
+
 
                     }
                 }
+            }
+
+            //
+            // Parts 13-14
+            //
+
+            if(CheckAircraftDestroyed())
+            {
+                return true;
             }
 
             return false;
