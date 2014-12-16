@@ -73,7 +73,6 @@ namespace Missile
                     }
                     MeshContent.Add(stldata);
                 }
-                i += 2;
             }
             model = new GeometryModel3D(mesh, materia);
         }
