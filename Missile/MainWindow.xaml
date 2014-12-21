@@ -25,6 +25,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -65,7 +66,7 @@
         <TextBox Grid.Row="15" Grid.Column="1" Name="txtt" Text="{Binding Path=tau, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
         <TextBlock Grid.Row="16">СК отклонение точки взрыва</TextBlock>
         <TextBox Grid.Row="16" Grid.Column="1" Name="txtsigmaX" Text="{Binding Path=sigmaX, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
-        <TextBlock Grid.Row="17" Grid.ColumnSpan="2" FontWeight="Bold">Характеристики рассеивания УР у цели:</TextBlock>
+        <TextBlock Grid.Row="17" Grid.ColumnSpan="2" FontWeight="Bold" TextWrapping="Wrap">Характеристики рассеивания УР у цели:</TextBlock>
         <TextBlock Grid.Row="18">Систематическая ошибка по y</TextBlock>
         <TextBox Grid.Row="18" Grid.Column="1" Name="txty" Text="{Binding Path=y, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
         <TextBlock Grid.Row="19">Систематическая ошибка по z</TextBlock>
@@ -74,10 +75,10 @@
         <TextBox Grid.Row="20" Grid.Column="1" Name="txtsigmaY" Text="{Binding Path=sigmaY, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
         <TextBlock Grid.Row="21">СК отклонение по z</TextBlock>
         <TextBox Grid.Row="21" Grid.Column="1" Name="txtsigmaZ" Text="{Binding Path=sigmaZ, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
-        <TextBlock Grid.Row="22">Количество итераций</TextBlock>
-        <TextBox Grid.Row="22" Grid.Column="1" Name="txtN">100</TextBox>
-        <ProgressBar Name="progress" Grid.Row="23"/>
-        <TextBlock Name="txtProgress" Grid.Row="23"/>
+        <TextBlock Grid.Row="23">Количество итераций</TextBlock>
+        <TextBox Grid.Row="23" Grid.Column="1" Name="txtN">100</TextBox>
+        <ProgressBar Name="progress" Grid.Row="99"/>
+        <TextBlock Name="txtProgress" Grid.Row="99"/>
         <Button Name="btnStart" Grid.Row="99" Grid.Column="1" Click="btnStart_Click">Начать</Button>
         <!--<Button Height="30" Click="Button_Click">Test</Button>-->
         <Border Grid.Column="2" Background="Transparent" MouseDown="Pic3d_MouseDown" MouseUp="Pic3d_MouseUp" MouseMove="Pic3d_MouseMove" Grid.RowSpan="99" >
