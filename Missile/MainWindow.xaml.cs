@@ -27,7 +27,7 @@ namespace Missile
         Aircraft aircraft;
         bool LMBDown = false;
         Point basePos;
-        Transform3D savedState;
+        Vector savedState = new Vector(0.0, 0.0), currentState;
 
         public MainWindow()
         {
@@ -55,7 +55,7 @@ namespace Missile
             {
                 LMBDown = true;
                 basePos = e.GetPosition(Pic3d);
-                savedState = DirLight.Transform;
+                //savedState = DirLight.Transform;
                 Pic3d.CaptureMouse();
             }
         }
@@ -66,6 +66,7 @@ namespace Missile
             {
                 LMBDown = false;
                 Pic3d.ReleaseMouseCapture();
+                savedState = currentState;
             }
         }
 
@@ -74,10 +75,10 @@ namespace Missile
             if (LMBDown)
             {
                 Vector p = basePos - e.GetPosition(Pic3d);
+                currentState = savedState + p;
                 Transform3DGroup gr = new Transform3DGroup();
-                gr.Children.Add(savedState);
-                gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0.0, 1.0, 0.0), p.X)));
-                gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1.0, 0.0, 0.0), p.Y)));
+                gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1.0, 0.0, 0.0), currentState.Y)));
+                gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0.0, 1.0, 0.0), currentState.X)));
                 ((PerspectiveCamera)Pic3d.Camera).Transform = gr;
                 DirLight.Transform = gr;
             }
