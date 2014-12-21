@@ -91,17 +91,25 @@ namespace Missile
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
+            int N = int.Parse(txtN.Text);
             ulong destroyed = 0;
             Computes c = new Computes();
             c.Init(aircraft, computeParams);
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < N; i++)
             {
                 if (c.Iterate())
                 {
                     destroyed++;
                 }
             }
-            MessageBox.Show(destroyed.ToString());
+            txtSum.Text = destroyed.ToString();
+            txtChance.Text = ((float)destroyed / (float)N).ToString();
+        }
+
+        private void txt_GotFocus(object sender, RoutedEventArgs e)
+        {
+            TextBox tb = sender as TextBox;
+            tb.SelectAll();
         }
     }
 }
