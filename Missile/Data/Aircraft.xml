@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+﻿<?xml version="1.0" encoding="utf-8" ?>
 <Aircraft Name="Самолёт">
   <Part ID="1" Name="Фюзеляж" ModelFileName="Фюзеляж.stl" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
   <Part ID="2" Name="Левая консоль крыла" ModelFileName="Крыло (л).stl" Required="true" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
@@ -10,9 +10,13 @@
   <Part ID="8" Name="Левый двигатель" ModelFileName="Двигатель (л).stl" GroupID="2" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
   <Part ID="9" Name="Правый двигатель" ModelFileName="Двигатель (п).stl" GroupID="2" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
   <Contour>
-    <Point X="1.0" Z="1.0"/>
-    <Point X="1.0" Z="-1.0"/>
-    <Point X="-1.0" Z="1.0"/>
-    <Point X="-1.0" Z="-1.0"/>
+    <Edge>
+      <StartPoint X="1.0" Z="1.0"/>
+      <EndPoint X="1.0" Z="-1.0"/>
+    </Edge>
+    <Edge>
+      <StartPoint X="-1.0" Z="1.0"/>
+      <EndPoint X="-1.0" Z="-1.0"/>
+    </Edge>
   </Contour>
 </Aircraft>

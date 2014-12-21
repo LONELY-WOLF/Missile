@@ -26,22 +26,23 @@ namespace Missile
             FileInfo fi = new FileInfo(xmlFileName);
             Part tmpPart;
 
-            foreach(XElement part in doc.Root.Elements(XName.Get("Part")))
+            foreach (XElement part in doc.Root.Elements("Part"))
             {
-                tmpPart = new Part(Path.Combine(fi.DirectoryName, part.Attribute(XName.Get("ModelFileName")).Value));
-                tmpPart.A = Double.Parse(part.Attribute(XName.Get("A")).Value, CultureInfo.InvariantCulture);
-                tmpPart.Delta = Double.Parse(part.Attribute(XName.Get("Delta")).Value, CultureInfo.InvariantCulture);
-                tmpPart.ID = Int32.Parse(part.Attribute(XName.Get("ID")).Value, CultureInfo.InvariantCulture);
-                tmpPart.J = Double.Parse(part.Attribute(XName.Get("J")).Value, CultureInfo.InvariantCulture);
-                tmpPart.L = Double.Parse(part.Attribute(XName.Get("L")).Value, CultureInfo.InvariantCulture);
-                tmpPart.SigmaS = Double.Parse(part.Attribute(XName.Get("SigmaS")).Value, CultureInfo.InvariantCulture);
-                if(part.Attribute(XName.Get("GroupID")) != null)
+                tmpPart = new Part(Path.Combine(fi.DirectoryName, part.Attribute("ModelFileName").Value));
+                tmpPart.Name = part.Attribute("Name").Value;
+                tmpPart.A = Double.Parse(part.Attribute("A").Value, CultureInfo.InvariantCulture);
+                tmpPart.Delta = Double.Parse(part.Attribute("Delta").Value, CultureInfo.InvariantCulture);
+                tmpPart.ID = Int32.Parse(part.Attribute("ID").Value, CultureInfo.InvariantCulture);
+                tmpPart.J = Double.Parse(part.Attribute("J").Value, CultureInfo.InvariantCulture);
+                tmpPart.L = Double.Parse(part.Attribute("L").Value, CultureInfo.InvariantCulture);
+                tmpPart.SigmaS = Double.Parse(part.Attribute("SigmaS").Value, CultureInfo.InvariantCulture);
+                if (part.Attribute("GroupID") != null)
                 {
-                    tmpPart.GroupID = Int32.Parse(part.Attribute(XName.Get("GroupID")).Value, CultureInfo.InvariantCulture);
+                    tmpPart.GroupID = Int32.Parse(part.Attribute("GroupID").Value, CultureInfo.InvariantCulture);
                 }
-                if (part.Attribute(XName.Get("Required")) != null)
+                if (part.Attribute("Required") != null)
                 {
-                    switch (part.Attribute(XName.Get("Required")).Value)
+                    switch (part.Attribute("Required").Value)
                     {
                         case "1":
                         case "true":
@@ -69,9 +70,21 @@ namespace Missile
                 }
                 parts.Add(tmpPart);
             }
-            foreach(Part part in parts)
+            foreach (Part part in parts)
             {
                 model.Children.Add(part.Model);
+            }
+            XElement c = doc.Root.Element("Contour");
+            var e = c.Elements("Edge");
+            contour = new Edge[e.Count()];
+            for (int i = 0; i < e.Count(); i++)
+            {
+                Edge edge = new Edge();
+                edge.p1.X = Double.Parse(e.ElementAt(i).Element("StartPoint").Attribute("X").Value, CultureInfo.InvariantCulture);
+                edge.p1.Z = Double.Parse(e.ElementAt(i).Element("StartPoint").Attribute("Z").Value, CultureInfo.InvariantCulture);
+                edge.p2.X = Double.Parse(e.ElementAt(i).Element("EndPoint").Attribute("X").Value, CultureInfo.InvariantCulture);
+                edge.p2.Z = Double.Parse(e.ElementAt(i).Element("EndPoint").Attribute("Z").Value, CultureInfo.InvariantCulture);
+                contour[i] = edge;
             }
         }
 

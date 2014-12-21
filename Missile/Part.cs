@@ -15,6 +15,7 @@ namespace Missile
     {
         GeometryModel3D model;
         double damage = 0.0;
+        public string Name;
 
         public List<STLData> MeshContent = new List<STLData>();
         public List<STLData> MeshContentB = new List<STLData>();

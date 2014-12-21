@@ -51,7 +51,7 @@ namespace Missile
 
         private void Pic3d_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 LMBDown = true;
                 basePos = e.GetPosition(Pic3d);
@@ -90,7 +90,17 @@ namespace Missile
 
         private void btnStart_Click(object sender, RoutedEventArgs e)
         {
-
+            ulong destroyed = 0;
+            Computes c = new Computes();
+            c.Init(aircraft, computeParams);
+            for (int i = 0; i < 10000; i++)
+            {
+                if (c.Iterate())
+                {
+                    destroyed++;
+                }
+            }
+            MessageBox.Show(destroyed.ToString());
         }
     }
 }

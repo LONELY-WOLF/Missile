@@ -63,6 +63,7 @@ namespace Missile
             for (int i = 0; i < ac.contour.Count(); i++)
             {
                 vertex = ac.contour[i].p1;
+                ac.contour0[i] = new Edge();
                 ac.contour0[i].p1.X = -(vertex.X * cosq) + (vertex.Y * sinalphaH) - (vertex.Z * sinq * cosalphaH);
                 ac.contour0[i].p1.Y = (vertex.Y * cosalphaH) + (vertex.Z * sinalphaH);
                 ac.contour0[i].p1.Z = (vertex.X * sinq) + (vertex.Y * cosq * sinalphaH) - (vertex.Z * cosq * cosalphaH);
@@ -249,8 +250,8 @@ namespace Missile
 
                         for (int j = 0; j < 3; j++)
                         {
-                            Point3D k = part.MeshContentB[i].Vertexes[i];
-                            Point3D t = part.MeshContentB[i].Vertexes[(i + 1 == 3) ? 0 : i + 1];
+                            Point3D k = part.MeshContentB[i].Vertexes[j];
+                            Point3D t = part.MeshContentB[i].Vertexes[(j + 1 == 3) ? 0 : j + 1];
                             l = Math.Sqrt(Math.Pow(k.X - t.X, 2.0) + Math.Pow(k.Y - t.Y, 2.0) + Math.Pow(k.Z - t.Z, 2.0));
 
                             A2 = A1 * Math.Pow(k.X - t.X, 2.0);
@@ -297,7 +298,7 @@ namespace Missile
                         // Part 10
                         //
 
-                        if(points.Count != 2)
+                        if (points.Count != 2)
                         {
                             continue;
                         }
@@ -319,7 +320,7 @@ namespace Missile
                             alpha = (90 - alpha) * Math.PI / 180.0;
                         }
                         double Lvn;
-                        if(alpha < 0.17453) // 10 degrees
+                        if (alpha < 0.17453) // 10 degrees
                         {
                             Lvn = 0;
                         }
@@ -332,11 +333,11 @@ namespace Missile
                         // Part 11
                         //
 
-                        if((Lvn>=part.L) && (R <= par.Rmax))
+                        if ((Lvn >= part.L) && (R <= par.Rmax))
                         {
                             partsDestroyed[ac.parts.IndexOf(part)] = true;
                         }
-                        
+
                         //
                         // Part 12
                         //
@@ -350,7 +351,7 @@ namespace Missile
             // Parts 13-14
             //
 
-            if(CheckAircraftDestroyed())
+            if (CheckAircraftDestroyed())
             {
                 return true;
             }
@@ -381,15 +382,17 @@ namespace Missile
 
         static bool IsPointInTriangle(Point3D p, Point3D p0, Point3D p1, Point3D p2)
         {
-            double s = (p0.Y * p2.Z - p0.Z * p2.Y + (p2.Y - p0.Y) * p.Z + (p0.Z - p2.Z) * p.Y);
-            double t = (p0.Z * p1.Y - p0.Y * p1.Z + (p0.Y - p1.Y) * p.Z + (p1.Z - p0.Z) * p.Y);
-
-            if (Math.Sign(s) != Math.Sign(t))
+            double a = (p0.Z - p.Z) * (p1.Y - p0.Y) - (p1.Z - p0.Z) * (p0.Y - p.Y);
+            double b = (p1.Z - p.Z) * (p2.Y - p1.Y) - (p2.Z - p1.Z) * (p1.Y - p.Y);
+            double c = (p2.Z - p.Z) * (p0.Y - p2.Y) - (p0.Z - p2.Z) * (p2.Y - p.Y);
+            if ((a >= 0 && b >= 0 && c >= 0) || (a <= 0 && b <= 0 && c <= 0))
+            {
+                return true;
+            }
+            else
+            {
                 return false;
-
-            var A = (-p1.Y * p2.Z + p0.Y * (-p1.Z + p2.Z) + p0.Z * (p1.Y - p2.Y) + p1.Z * p2.Y);
-
-            return (Math.Sign(t) == Math.Sign(A));
+            }
         }
 
         bool CheckAircraftDestroyed()
@@ -441,5 +444,14 @@ namespace Missile
 
             return false;
         }
+    }
+
+    enum DestroyType
+    {
+        None, // Not destoyed
+        DirectHit,
+        Blast,
+        ContinuousRod,
+        Fragments // Not used
     }
 }

@@ -1,9 +1,13 @@
 ﻿<Window x:Class="Missile.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="450" Width="525" Loaded="Window_Loaded">
+        Title="MainWindow" Height="582" Width="697" Loaded="Window_Loaded">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -61,11 +65,20 @@
         <TextBox Grid.Row="15" Grid.Column="1" Name="txtt" Text="{Binding Path=tau, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
         <TextBlock Grid.Row="16">СК отклонение точки взрыва</TextBlock>
         <TextBox Grid.Row="16" Grid.Column="1" Name="txtsigmaX" Text="{Binding Path=sigmaX, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
-        <TextBlock Grid.Row="18">Количество итераций</TextBlock>
-        <TextBox Grid.Row="18" Grid.Column="1" Name="txtN">100</TextBox>
-        <ProgressBar Name="progress" Grid.Row="19"/>
-        <TextBlock Name="txtProgress" Grid.Row="19"/>
-        <Button Name="btnStart" Grid.Row="19" Grid.Column="1" Click="btnStart_Click">Начать</Button>
+        <TextBlock Grid.Row="17" Grid.ColumnSpan="2" FontWeight="Bold">Характеристики рассеивания УР у цели:</TextBlock>
+        <TextBlock Grid.Row="18">Систематическая ошибка по y</TextBlock>
+        <TextBox Grid.Row="18" Grid.Column="1" Name="txty" Text="{Binding Path=y, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
+        <TextBlock Grid.Row="19">Систематическая ошибка по z</TextBlock>
+        <TextBox Grid.Row="19" Grid.Column="1" Name="txtz" Text="{Binding Path=z, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
+        <TextBlock Grid.Row="20">СК отклонение по y</TextBlock>
+        <TextBox Grid.Row="20" Grid.Column="1" Name="txtsigmaY" Text="{Binding Path=sigmaY, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
+        <TextBlock Grid.Row="21">СК отклонение по z</TextBlock>
+        <TextBox Grid.Row="21" Grid.Column="1" Name="txtsigmaZ" Text="{Binding Path=sigmaZ, FallbackValue=0, Mode=TwoWay, StringFormat=\{0:F2\}, TargetNullValue=0, UpdateSourceTrigger=LostFocus}"></TextBox>
+        <TextBlock Grid.Row="22">Количество итераций</TextBlock>
+        <TextBox Grid.Row="22" Grid.Column="1" Name="txtN">100</TextBox>
+        <ProgressBar Name="progress" Grid.Row="23"/>
+        <TextBlock Name="txtProgress" Grid.Row="23"/>
+        <Button Name="btnStart" Grid.Row="99" Grid.Column="1" Click="btnStart_Click">Начать</Button>
         <!--<Button Height="30" Click="Button_Click">Test</Button>-->
         <Border Grid.Column="2" Background="Transparent" MouseDown="Pic3d_MouseDown" MouseUp="Pic3d_MouseUp" MouseMove="Pic3d_MouseMove" Grid.RowSpan="99" >
             <!-- The Viewport3D provides a rendering surface for 3-D visual content. -->
