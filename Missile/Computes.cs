@@ -17,7 +17,7 @@ namespace Missile
         bool[] partsDestroyed;
         double A1, B1, C1, E1;
 
-        public void Init(Aircraft aircraft, ComputeParams computeParams)
+        public Computes(Aircraft aircraft, ComputeParams computeParams)
         {
             this.ac = aircraft;
             this.par = computeParams;
@@ -35,6 +35,30 @@ namespace Missile
             double sinalphaH = Math.Sin(par.alphaH);
             double cosq = Math.Cos(q);
             double cosalphaH = Math.Cos(par.alphaH);
+
+            double f0 = Vrel / par.Vo;
+            double cose = Math.Cos(epsilon);
+            double sine = Math.Sin(epsilon);
+            double cosphi = Math.Cos(par.phi);
+            double sinphi = Math.Sin(par.phi);
+            A1 = Math.Pow(sine, 2.0) + Math.Pow(sinphi, 2.0);
+            B1 = Math.Pow(cosphi + (f0 * cose), 2.0);
+            C1 = Math.Pow(f0 + cosphi * cose, 2.0) - Math.Pow(sinphi, 2.0) * Math.Pow(sine, 2.0);
+            E1 = -sine * (f0 * cosphi + cose);
+        }
+
+        public static void Init(Aircraft aircraft, ComputeParams computeParams)
+        {
+            ComputeParams par = computeParams;
+            Aircraft ac = aircraft;
+            double epsilon = Math.Atan((par.Vt * Math.Sin(par.ae)) / (par.Vt * Math.Cos(par.ae) + par.Vm));
+            double Vrel = Math.Sqrt((par.Vm * par.Vm) + (par.Vt * par.Vt) + (2 * par.Vt * par.Vm * Math.Cos(par.ae)));
+            double q = par.ae - epsilon;
+            double sinq = Math.Sin(q);
+            double sinalphaH = Math.Sin(par.alphaH);
+            double cosq = Math.Cos(q);
+            double cosalphaH = Math.Cos(par.alphaH);
+
             Point3D vertex;
             // Model translate
             for (int partN = 0; partN < ac.parts.Count(); partN++)
@@ -73,19 +97,9 @@ namespace Missile
                 ac.contour0[i].p2.Y = (vertex.Y * cosalphaH) + (vertex.Z * sinalphaH);
                 ac.contour0[i].p2.Z = (vertex.X * sinq) + (vertex.Y * cosq * sinalphaH) - (vertex.Z * cosq * cosalphaH);
             }
-
-            double f0 = Vrel / par.Vo;
-            double cose = Math.Cos(epsilon);
-            double sine = Math.Sin(epsilon);
-            double cosphi = Math.Cos(par.phi);
-            double sinphi = Math.Sin(par.phi);
-            A1 = Math.Pow(sine, 2.0) + Math.Pow(sinphi, 2.0);
-            B1 = Math.Pow(cosphi + (f0 * cose), 2.0);
-            C1 = Math.Pow(f0 + cosphi * cose, 2.0) - Math.Pow(sinphi, 2.0) * Math.Pow(sine, 2.0);
-            E1 = -sine * (f0 * cosphi + cose);
         }
 
-        public bool Iterate()
+        public ComputeResult Iterate()
         {
             //
             // Part 2
@@ -111,7 +125,7 @@ namespace Missile
                     {
                         if (IsPointInTriangle(p, facet.Vertexes[0], facet.Vertexes[1], facet.Vertexes[2]))
                         {
-                            return true;
+                            return new ComputeResult(partsDestroyed, DestroyType.DirectHit);
                         }
                     }
                 }
@@ -209,7 +223,7 @@ namespace Missile
 
             if (CheckAircraftDestroyed())
             {
-                return true;
+                return new ComputeResult(partsDestroyed, DestroyType.Blast);;
             }
 
             //
@@ -353,10 +367,10 @@ namespace Missile
 
             if (CheckAircraftDestroyed())
             {
-                return true;
+                return new ComputeResult(partsDestroyed, DestroyType.ContinuousRod);;
             }
 
-            return false;
+            return new ComputeResult(partsDestroyed, DestroyType.None);;
         }
 
         void RandVal(double mean1, double sigma1, out double rand1, double mean2, double sigma2, out double rand2)
@@ -453,5 +467,16 @@ namespace Missile
         Blast,
         ContinuousRod,
         Fragments // Not used
+    }
+
+    struct ComputeResult
+    {
+        public bool[] PartsDestroyed;
+        public DestroyType ExitReason;
+        public ComputeResult(bool[] partsDestroyed, DestroyType exitReason)
+        {
+            PartsDestroyed = partsDestroyed;
+            ExitReason = exitReason;
+        }
     }
 }
