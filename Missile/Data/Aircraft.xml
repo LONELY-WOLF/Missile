@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Aircraft Name="Самолёт" CameraDistance="30.0">
-  <Part ID="1" Name="Фюзеляж" ModelFileName="Фюзеляж.stl" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="2" Name="Левая консоль крыла" ModelFileName="Крыло (л).stl" Required="true" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="3" Name="Правая консоль крыла" ModelFileName="Крыло (п).stl" Required="true" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="4" Name="Левый стабилизатор" ModelFileName="Стабилизатор (л).stl" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="5" Name="Правый стабилизатор" ModelFileName="Стабилизатор (п).stl" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="6" Name="Левый киль" ModelFileName="Киль (л).stl" GroupID="1" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="7" Name="Правый киль" ModelFileName="Киль (п).stl" GroupID="1" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="8" Name="Левый двигатель" ModelFileName="Двигатель (л).stl" GroupID="2" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
-  <Part ID="9" Name="Правый двигатель" ModelFileName="Двигатель (п).stl" GroupID="2" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
+  <Part ID="1" Name="Фюзеляж" ModelFileName="Фюзеляж.stl" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="2" Name="Левая консоль крыла" ModelFileName="Крыло (л).stl" Required="true" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="3" Name="Правая консоль крыла" ModelFileName="Крыло (п).stl" Required="true" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="4" Name="Левый стабилизатор" ModelFileName="Стабилизатор (л).stl" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="5" Name="Правый стабилизатор" ModelFileName="Стабилизатор (п).stl" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="6" Name="Левый киль" ModelFileName="Киль (л).stl" GroupID="1" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="7" Name="Правый киль" ModelFileName="Киль (п).stl" GroupID="1" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="8" Name="Левый двигатель" ModelFileName="Двигатель (л).stl" GroupID="2" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
+  <Part ID="9" Name="Правый двигатель" ModelFileName="Двигатель (п).stl" GroupID="2" J="100.0" Delta="2.0" SigmaS="450.0" A="0.6" L="10.0"/>
   <Contour>
     <Edge>
       <StartPoint X="1.0" Z="1.0"/>
