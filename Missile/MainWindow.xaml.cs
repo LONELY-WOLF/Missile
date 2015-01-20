@@ -39,7 +39,6 @@ namespace Missile
         {
             InitializeComponent();
             computeParams = new ComputeParams();
-            computeParams.Vt = 10.43453;
             MainGrid.DataContext = computeParams;
         }
 
@@ -52,6 +51,7 @@ namespace Missile
                 ModelVisual3D mv3d = new ModelVisual3D();
                 mv3d.Content = aircraft.Model;
                 Pic3d.Children.Add(mv3d);
+                Pic3d.Camera = aircraft.Camera;
             }
         }
 
@@ -82,7 +82,7 @@ namespace Missile
                 Vector p = basePos - e.GetPosition(Pic3d);
                 currentState = savedState + p;
                 Transform3DGroup gr = new Transform3DGroup();
-                gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(1.0, 0.0, 0.0), currentState.Y)));
+                gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0.0, 0.0, -1.0), currentState.Y)));
                 gr.Children.Add(new RotateTransform3D(new AxisAngleRotation3D(new Vector3D(0.0, 1.0, 0.0), currentState.X)));
                 ((PerspectiveCamera)Pic3d.Camera).Transform = gr;
                 DirLight.Transform = gr;

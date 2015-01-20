@@ -92,7 +92,7 @@
             <Viewport3D ClipToBounds="True" x:Name="Pic3d">
                 <!-- Defines the camera used to view the 3D object. -->
                 <Viewport3D.Camera>
-                    <PerspectiveCamera Position="0,0,1.5" LookDirection="0,0,-1" FieldOfView="60" />
+                    <PerspectiveCamera Position="1.5,0,0" LookDirection="-1,0,0" FieldOfView="60" />
                 </Viewport3D.Camera>
 
                 <!-- The ModelVisual3D children contain the 3D models -->
@@ -108,7 +108,7 @@
                     </ModelVisual3D>
                     <ModelVisual3D>
                         <ModelVisual3D.Content>
-                            <DirectionalLight x:Name="DirLight" Color="#DDDDDD" Direction="0.0,0.0,-1.0" />
+                            <DirectionalLight x:Name="DirLight" Color="#DDDDDD" Direction="-1.0,0.0,0.0" />
                         </ModelVisual3D.Content>
                     </ModelVisual3D>
                 </Viewport3D.Children>

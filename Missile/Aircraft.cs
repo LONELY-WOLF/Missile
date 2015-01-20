@@ -14,6 +14,7 @@ namespace Missile
 {
     class Aircraft : INotifyPropertyChanged
     {
+        double cameraDistance;
         Model3DGroup model;
         public ObservableCollection<Part> parts = new ObservableCollection<Part>();
         public Edge[] contour;
@@ -25,6 +26,7 @@ namespace Missile
             model = new Model3DGroup();
             FileInfo fi = new FileInfo(xmlFileName);
             Part tmpPart;
+            cameraDistance = Double.Parse(doc.Root.Attribute("CameraDistance").Value, CultureInfo.InvariantCulture);
 
             foreach (XElement part in doc.Root.Elements("Part"))
             {
@@ -101,6 +103,14 @@ namespace Missile
             get
             {
                 return model;
+            }
+        }
+
+        public Camera Camera
+        {
+            get
+            {
+                return new PerspectiveCamera(new Point3D(cameraDistance, 0, 0), new Vector3D(-1, 0, 0), new Vector3D(0, 1, 0), 40.0);
             }
         }
 

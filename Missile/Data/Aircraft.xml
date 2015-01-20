@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Aircraft Name="Самолёт">
+<Aircraft Name="Самолёт" CameraDistance="30.0">
   <Part ID="1" Name="Фюзеляж" ModelFileName="Фюзеляж.stl" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
   <Part ID="2" Name="Левая консоль крыла" ModelFileName="Крыло (л).stl" Required="true" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
   <Part ID="3" Name="Правая консоль крыла" ModelFileName="Крыло (п).stl" Required="true" J="1.0" Delta="1.0" SigmaS="1.0" A="1.0" L="1.0"/>
