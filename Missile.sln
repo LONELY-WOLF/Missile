@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Missile", "Missile\Missile.csproj", "{2093FCD7-6CDD-41F0-B741-52CD1E94372C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{DD893C3A-C489-4859-A3D9-F6CF4A09EB48}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{2093FCD7-6CDD-41F0-B741-52CD1E94372C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2093FCD7-6CDD-41F0-B741-52CD1E94372C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2093FCD7-6CDD-41F0-B741-52CD1E94372C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD893C3A-C489-4859-A3D9-F6CF4A09EB48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD893C3A-C489-4859-A3D9-F6CF4A09EB48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD893C3A-C489-4859-A3D9-F6CF4A09EB48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD893C3A-C489-4859-A3D9-F6CF4A09EB48}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

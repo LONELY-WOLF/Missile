@@ -264,15 +264,15 @@ namespace Missile
 
                         for (int j = 0; j < 3; j++)
                         {
-                            Point3D k = part.MeshContentB[i].Vertexes[j];
-                            Point3D t = part.MeshContentB[i].Vertexes[(j + 1 == 3) ? 0 : j + 1];
+                            Point3D t = part.MeshContentB[i].Vertexes[j];
+                            Point3D k = part.MeshContentB[i].Vertexes[(j + 1 == 3) ? 0 : j + 1];
                             l = Math.Sqrt(Math.Pow(k.X - t.X, 2.0) + Math.Pow(k.Y - t.Y, 2.0) + Math.Pow(k.Z - t.Z, 2.0));
 
                             A2 = A1 * Math.Pow(k.X - t.X, 2.0);
                             A2 += B1 * Math.Pow(k.Y - t.Y, 2.0);
                             A2 += C1 * Math.Pow(k.Z - t.Z, 2.0);
                             A2 += 2 * E1 * (k.X - t.X) * (k.Z - t.Z);
-                            A2 /= l * l;
+                            A2 /= (l * l);
 
                             B2 = A1 * t.X * (k.X - t.X);
                             B2 += B1 * t.Y * (k.Y - t.Y);
